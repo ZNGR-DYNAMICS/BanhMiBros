@@ -1,5 +1,11 @@
+# ide
+/.idea
+
 # dependencies
 /node_modules
 
 # compiled
 /dist
+
+# environment variables
+.env
