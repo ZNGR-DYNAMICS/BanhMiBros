@@ -1,53 +1,47 @@
-name: Build and Deploy
+name: Build and Deploy Preview
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # 1 Checkout repo
+    # Step 1: Checkout repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2 Setup node
-    - name: Set up Node.js
+    # Step 2: Install Node.Js
+    - name: Install Node.js
       uses: actions/setup-node@v3
-      with: 
+      with:
         node-version: 22
     
-    # 3 Install dependencies, build react app
-    - name: Install dependencies and build
+    # Step 3: Install dependencies
+    - name: Install Dependencies and build
       working-directory: ./
       env:
         CI: false
       run: |
         npm install
         npm run build
-    
-    # 4 Copy server files and React build folder to deployment branch
-    - name: Deploy to deploy branch
+
+    # Step 4: Copy server files and build folder to dev-preview 
+    - name: Deploy to Dev Preview branch
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mkdir deploy
-
         cp -R server deploy/
-
         cp -R build/* deploy/
-
+        
         cd deploy
         git init
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
 
         git add .
-        git commit -m "Deploy from GitHub Actions"
-        git branch -M deploy
-        git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ZNGR-DYNAMICS/BanhMiBros-React.git deploy
-
-    
+        git commit -m "Deploy dev-preview build from dev"
+        git branch -M dev-preview
+        git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ZNGR-DYNAMICS/BanhMiBros.git dev-preview
