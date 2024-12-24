@@ -1,4 +1,4 @@
-name: Build and Deploy Preview
+name: Preview Build and Deploy
 
 on:
   workflow_dispatch:
