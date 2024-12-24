@@ -2,7 +2,7 @@
 
 require_once 'env.php';
 
-loadEnv(__DIR__, '../.env');
+loadEnv(__DIR__, '../.env.preview');
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");

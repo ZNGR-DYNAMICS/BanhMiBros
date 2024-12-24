@@ -2,7 +2,7 @@
 
 require_once './env.php';
 
-loadEnv(__DIR__, '../.env');
+loadEnv(__DIR__, '../.env.preview');
 
 $servername = getenv('DB_SERVER');
 $username = getenv('DB_USERNAME');
